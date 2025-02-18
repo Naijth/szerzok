@@ -1,3 +1,9 @@
+/**
+ * creates the table
+ * @param {Array}} array 
+ * @param {HTMLElement} thead 
+ * @param {HTMLElement} tbody 
+ */
 function renderTable(array, thead, tbody){
     for (let i = 0; i < array.length; i++) {
         if (i == 0) {
@@ -36,6 +42,9 @@ function renderTable(array, thead, tbody){
     }
 }
 
+/**
+ * only renders the form
+ */
 function renderForm() {
     const form = document.createElement('form');
     form.id = 'form';
@@ -53,6 +62,13 @@ function renderForm() {
     form.appendChild(button);
 }
 
+/**
+ * the renderForm uses it to make the form
+ * @param {HTMLElement} form 
+ * @param {String} type 
+ * @param {String} labelText 
+ * @param {String} id 
+ */
 function formField(form, type, labelText, id){
     const mainDiv = document.createElement('div');
     form.appendChild(mainDiv);
@@ -79,6 +95,12 @@ function formField(form, type, labelText, id){
     mainDiv.appendChild(br3);
 }
 
+/**
+ * validates the fields
+ * @param {HTMLElement} inputElement 
+ * @param {String} inputErrorMessage 
+ * @returns false if input element is empty, true if it isn't
+ */
 function validateFormField(inputElement, inputErrorMessage){
     if (inputElement.value == ''){
         const parentElement = inputElement.parentElement;
@@ -92,6 +114,12 @@ function validateFormField(inputElement, inputErrorMessage){
     }
 }
 
+/**
+ * validates the last field which requires a checkbox
+ * @param {HTMLElement} checkboxElement 
+ * @param {HTMLElement} creation2Element 
+ * @returns returns false if box is checked and input is empty and vice versa. true if anything else
+ */
 function formComplexValidator(checkboxElement, creation2Element){
     if (checkboxElement.checked && creation2Element.value == ""){
         return validateFormField(creation2Element, "A mező megadása kötelező, ha a checkbox be van jelölve!");
