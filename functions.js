@@ -35,3 +35,73 @@ function renderTable(array, thead, tbody){
         }
     }
 }
+
+function renderForm() {
+    const form = document.createElement('form');
+    form.id = 'form';
+    form.action = '';
+    document.body.appendChild(form);
+
+    formField(form, "text", "Szerző neve:", "szerzo_nev")
+    formField(form, "text", "Csapat:", "group")
+    formField(form, "text", "Első mű:", "mu1")
+    formField(form, "checkbox", "Szeretnél megadni második művet is?", "masodik")
+    formField(form, "text", "Második mű:", "mu2")
+
+    const button = document.createElement('button');
+    button.innerHTML = "Hozzáadás";
+    form.appendChild(button);
+}
+
+function formField(form, type, labelText, id){
+    const mainDiv = document.createElement('div');
+    form.appendChild(mainDiv);
+
+    const label = document.createElement('label');
+    label.for = id;
+    label.innerHTML = labelText;
+    mainDiv.appendChild(label);
+    const br1 = document.createElement('br');
+    mainDiv.appendChild(br1);
+
+    const input = document.createElement('input');
+    input.type = type;
+    input.id = id;
+    input.name = id;
+    mainDiv.appendChild(input);
+    const br2 = document.createElement('br');
+    mainDiv.appendChild(br2);
+
+    const errorDiv = document.createElement('div');
+    errorDiv.setAttribute('class', 'error'); 
+    mainDiv.appendChild(errorDiv);
+    const br3 = document.createElement('br');
+    mainDiv.appendChild(br3);
+}
+
+function validateFormField(inputElement, inputErrorMessage){
+    if (inputElement.value == ''){
+        const parentElement = inputElement.parentElement;
+        const error = parentElement.querySelector('.error');
+        if (error != undefined) {
+            error.innerHTML = inputErrorMessage;
+        }
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function formComplexValidator(checkboxElement, creation2Element){
+    if (checkboxElement.checked && creation2Element.value == ""){
+        return validateFormField(creation2Element, "A mező megadása kötelező, ha a checkbox be van jelölve!");
+    } else if (checkboxElement.checked == false && creation2Element.value != "") {
+        const checkboxParent = checkboxElement.parentElement
+        const checkboxError = checkboxParent.querySelector('.error');
+        if (checkboxError != undefined) {
+            checkboxError.innerHTML = "A checkboxot ki kell pipálni a második mű megadásához!";
+        }
+        return false;
+    } else 
+    return true;
+}
